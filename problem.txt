@@ -1,0 +1,8 @@
+Plik dodany w gałęzi iss53
+Commit 1
+
+------------------------------
+
+Nowa treść
+
+Commit 2
