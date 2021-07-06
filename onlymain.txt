@@ -1,3 +1,0 @@
-Plik dodany w master 
-Stworzenie nowej migawki, która rozgałęzia się z gałęzią iss53 !
-
