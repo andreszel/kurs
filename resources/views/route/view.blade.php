@@ -1,0 +1,1 @@
+Widok od razu, bez kontrolera.
