@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Users</title>
 </head>
 <body>
-    Hello controller. View!
-    Test
-    Test2
-    Test3
+    <h1>User list</h1>
+    <ul>
+        <li>Jan</li>
+        <li>Karol</li>
+    </ul>
 </body>
 </html>
