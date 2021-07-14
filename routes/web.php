@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// example url for response object
+Route::get('response/example/{id}', 'UserController@responseExample')
+    ->where(['id'=>'[0-9]+'])
+    ->name('get.response.example');
+
 Route::get('users', 'UserController@list')
     ->name('get.users');
 

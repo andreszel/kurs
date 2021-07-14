@@ -13,6 +13,56 @@ class UserController extends Controller
         return view('user.list');
     }
 
+    public function responseExample(Request $request, int $id)
+    {
+        //tekst
+        return "Zwykły tekst $id";
+
+        // Response object
+        /* return response(
+            "<h3>Obiekt response. ID: $id</h3>",
+            200,
+            ['Content-Type' => 'text/plain']
+        ); */
+
+        //Chain
+        /* return response("<h3>Obiekt response. ID: $id</h3>")
+            ->setStatusCode(200)
+            ->header('Content-Type', 'text/html')
+            ->header('Own-Header', 'Laravel'); */
+
+        // With cookies
+        /* return response("<h3>Cookie, MIX, Obiekt response. ID: $id</h3>", 200)
+            ->header('Content-Type', 'text/html')
+            ->cookie('my_cookie', 'brownie', 10);//czas w minutach */
+        
+        // Redirect
+        //return redirect('users');
+
+        // Redirect by route
+        //return redirect()->route('get.users');
+        //return redirect()->route('get.user.address', ['id' => $id]);
+
+        // Redirect to controller
+        //return redirect()->action('UserController@list');
+        //return redirect()->action('User\ShowAddress', ['id' => $id]);
+
+        // Redirect to other site
+        //return redirect()->away('https://mentorzy.it');
+
+        //when we need set status header itp
+
+        // response view
+        /* return response()
+            ->view('user.profile', ['id'=>$id])
+            ->header('Content-Type', 'text/html'); */
+        // helper do helpera view
+        //return view('user.profile', ['id'=>$id]);
+
+        // set as default: Content-Type: application/json
+        //return response()->json(['id' => $id]);
+    }
+
     public function testShow(Request $request, int $id)
     {
         $uri = $request->path();
