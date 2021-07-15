@@ -13,6 +13,15 @@ class UserController extends Controller
         return view('user.list');
     }
 
+    public function bladeExample(Request $request, int $id)
+    {
+        return view('user.show', [
+            'id' => $id,
+            'example' => 'show',
+            'titleName' => 'Games - title nadpisany w akcji'
+        ]);
+    }
+
     public function responseExample(Request $request, int $id)
     {
         //tekst
@@ -35,7 +44,7 @@ class UserController extends Controller
         /* return response("<h3>Cookie, MIX, Obiekt response. ID: $id</h3>", 200)
             ->header('Content-Type', 'text/html')
             ->cookie('my_cookie', 'brownie', 10);//czas w minutach */
-        
+
         // Redirect
         //return redirect('users');
 
@@ -70,10 +79,10 @@ class UserController extends Controller
         $fullUrl  = $request->fullUrl();
         $httpMethod = $request->method();
 
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             dump('To jest POST');
         }
-        if($request->isMethod('get')){
+        if ($request->isMethod('get')) {
             dump('To jest GET');
         }
 
@@ -95,9 +104,9 @@ class UserController extends Controller
         //jeżeli chcemy sprawdzić, czy parametr został przesłany
         $hasName = $request->has('nameTest');
         //czy kilka parametrów zostało przesłane
-        $hasParams = $request->has(['nameTest','testtt']);
+        $hasParams = $request->has(['nameTest', 'testtt']);
         //czy którykowliek z parametrów został przesłany
-        $hasAnyParams = $request->hasAny(['nameTest','testtt']);
+        $hasAnyParams = $request->hasAny(['nameTest', 'testtt']);
         //sprawdzanie ciasteczek, tablica ciasteczek
         $cookies = $request->cookies();
         //pobranie konkretnego ciasteczka analogicznie, wartość domyślna
@@ -116,7 +125,7 @@ class UserController extends Controller
 
     public function testStore(Request $request, int $id)
     {
-        if(!$request->isMethod('post')){
+        if (!$request->isMethod('post')) {
             return 'To jest POST';
         }
 
@@ -124,7 +133,7 @@ class UserController extends Controller
         $all = $request->all();
         //tylko parametry z query
         $allQuery = $request->query();
-        
+
         echo "ALL QUERY\n\n";
         print_r($allQuery);
         echo "\n\n";

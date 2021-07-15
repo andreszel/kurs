@@ -94,6 +94,11 @@ Route::get('user/profile/{id}/address', 'User\ShowAddress')
 
 Route::resource('games', GameController::class);
 
+// section 7
+Route::get('blade/example/{id}', 'UserController@bladeExample')
+    ->where(['id' => '[0-9]+'])
+    ->name('get.blade.example');
+
 // dzięki poniższym zapisom z chain only możemy sobie zdefiniować, które adresy mają być widoczne dla wszystkich, a które tylko dla admina lub w adminie
 /* Route::resource('games', GameController::class)
     ->only([
