@@ -58,7 +58,7 @@ Route::get('posts/{postId}/title/{title}', function (int $postId, string $title)
     dd($postId);
 });
 
-Route::get('users/{nick?}', function (string $nick = null) {
+Route::get('users-f/{nick?}', function (string $nick = null) {
     dd($nick);
 });
 
@@ -95,9 +95,15 @@ Route::get('user/profile/{id}/address', 'User\ShowAddress')
 Route::resource('games', GameController::class);
 
 // section 7
-Route::get('blade/example/{id}', 'UserController@bladeExample')
+Route::get('section/6/blade/example/{id}', 'UserController@bladeExample')
     ->where(['id' => '[0-9]+'])
     ->name('get.blade.example');
+
+// section 8
+Route::get('users/show/{userId}', 'UserController@show')
+    ->name('get.user.show');
+Route::get('users/list', 'UserController@list')
+    ->name('get.user.list');
 
 // dzięki poniższym zapisom z chain only możemy sobie zdefiniować, które adresy mają być widoczne dla wszystkich, a które tylko dla admina lub w adminie
 /* Route::resource('games', GameController::class)

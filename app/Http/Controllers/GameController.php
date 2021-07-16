@@ -15,7 +15,7 @@ class GameController extends Controller
     public function index()
     {
         $faker = Factory::create();
-        $games = array();
+        $games = [];
 
         for($i = 0; $i < 10; $i++){
             $game = [

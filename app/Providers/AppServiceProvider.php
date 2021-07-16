@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // zmienne współdzielone, które przydatne są dla w wielu widokach
         // używamy ich bezpośrednio w widoku
-        view()->share('appName', 'Laravel Games');
+        view()->share('appName', 'Świat GIER');
         View::share('titleName', 'Games App');
     }
 }
