@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', $titleName)</title>
+    <script src="{{ mix('js/app.js') }}"></script>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+
     <style>
         td {
             padding-right: 15px;
