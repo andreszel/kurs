@@ -14,7 +14,9 @@
                     <th>Opcje</th>
                 </thead>
                 <tbody>
-                    @each('user.listRow', $users, 'userData', 'user.emptyRow')
+                    @foreach($users AS $user)
+                        @include('user.listRow', ['userData'=>$user])
+                    @endforeach
                 </tbody>
             </table>
         </div>

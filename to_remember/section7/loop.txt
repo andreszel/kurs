@@ -115,3 +115,6 @@
             @guest
                 Użytkownik nie jest zalogowany
             @endguest                            
+
+
+@each('user.listRow', $users, 'userData', 'user.emptyRow')

@@ -22,14 +22,18 @@ class UserController extends Controller
             ];
         }
 
+        $faker_session = Factory::create();
+        $ok = $faker_session->numberBetween(0,1);
+
+        $session = $request->session();
+        $session->flash('ok', $ok);
+
         return view('user.list', [
-            'users' => $users,
-            'usersEmpty' => $usersEmpty,
-            'type'=>1
+            'users' => $users
         ]);
     }
 
-    public function show(int $userId)
+    public function show(Request $request, int $userId)
     {
         $faker = Factory::create();
         $user = [
