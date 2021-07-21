@@ -2,59 +2,31 @@
 
 @section('title', 'Profil użytkownika')
 
-@section('sidebar')
-    @parent
-    DZIECKO
-    Sidebar z dziecka
-@endsection
-
 @section('content')
-<h1>{{$titleName}}</h1>
-<div>
-    <p>ID: {{$user['id']}}</p>
-    <p>App Name: {{$appName}}</p>
-</div>
-<hr>
-    @auth
-        Informuje czy użytkownik est zalogowany
-    @endauth
 
-    @guest
-        Użytkownik nie jest zalogowany
-    @endguest
-<hr>
-<ul>
-    <li>Id: {{ $user['id'] }}</li>
-    <li>Imię: {{ $user['firstName'] }}</li>
-    <li>Nazwisko: {{ $user['lastName'] }}</li>
-    <li>Miejscowość: {{ $user['city'] }}</li>
-    <li>
-        Wiek: {{ $user['age'] }}
-        @if ($user['age'] >= 18)
-            <span>OSOBA DOROSŁA</span>
-        @elseif ($user['age'] >= 16)
-            <span>PRAWIE DOROSŁA</span>
-        @else
-            <span>NASTOLATEK</span>
-        @endif
-    </li>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-primary">{{ $user['firstName'] }} {{ $user['lastName'] }}</h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>Id: {{ $user['id'] }}</li>
+                <li>Imię: {{ $user['firstName'] }}</li>
+                <li>Nazwisko: {{ $user['lastName'] }}</li>
+                <li>Miejscowość: {{ $user['city'] }}</li>
+                <li>
+                    Wiek: {{ $user['age'] }}
+                    @if ($user['age'] >= 18)
+                        <span>OSOBA DOROSŁA</span>
+                    @elseif ($user['age'] >= 16)
+                        <span>PRAWIE DOROSŁA</span>
+                    @else
+                        <span>NASTOLATEK</span>
+                    @endif
+                </li>
+            </ul>
 
-    @isset($nick)
-        Nick: true
-    @else
-        Nick: false
-    @endisset
-
-    @empty($nick)
-        EMPTY: true
-    @else
-        EMPTY: false
-    @endempty
-</ul>
-
-<div>
-    {{ $user['html'] }}
-    <br>
-    {!! $user['html'] !!}
-</div>
+            <a href="{{ route('get.users') }}" class="btn btn-sm btn-light">Lista użytkowników</a>
+        </div>
+    </div>            
 @endsection

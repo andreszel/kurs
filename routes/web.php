@@ -16,34 +16,46 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Home\MainPage')
+    ->name('home.mainPage');
 
-Route::get('/goodbye/{name}', function (string $name) {
+Route::get('users', 'UserController@list')
+    ->name('get.users');
+
+Route::get('users/{userId}', 'UserController@show')
+    ->name('get.user.show');
+
+/* Route::get('users/{id}/profile', 'User\ProfileController@show')
+    ->name('get.user.show'); */
+
+Route::get('user/profile/{id}/address', 'User\ShowAddress')
+    ->where(['id' => '[0-9]+'])
+    ->name('get.user.address');
+
+/* Route::get('/goodbye/{name}', function (string $name) {
     return 'Goodbaye: ' . $name;
-});
+}); */
 
 /* Route::get('/example', function () {
     return 'here is method get';
 }); */
 
-$uri = '/example';
+/* $uri = '/example';
 Route::get($uri, fn () => 'hello here is get with arrow function');
 Route::post($uri, fn () => 'hello here is post with arrow function');
 Route::put($uri, fn () => 'hello here is put with arrow function');
 Route::patch($uri, fn () => 'hello here is patch with arrow function');
 Route::delete($uri, fn () => 'hello here is delete with arrow function');
-Route::options($uri, fn () => 'hello here is options with arrow function');
+Route::options($uri, fn () => 'hello here is options with arrow function'); */
 
 //dla wybranych metod
-Route::match(['get', 'post'], '/match', fn () => 'here is match for get and post with arrow function');
+//Route::match(['get', 'post'], '/match', fn () => 'here is match for get and post with arrow function');
 
 //wszystkie metody
-Route::any('/all', fn () => 'all methods');
+//Route::any('/all', fn () => 'all methods');
 
 //pominięcie callback function, direct redirect to view
-Route::view('/view/route', 'route.view');
+/* Route::view('/view/route', 'route.view');
 Route::view(
     '/view/route/var1',
     'route.viewParam',
@@ -103,7 +115,7 @@ Route::get('section/6/blade/example/{id}', 'UserController@bladeExample')
 Route::get('users/show/{userId}', 'UserController@show')
     ->name('get.user.show');
 Route::get('users/list', 'UserController@list')
-    ->name('get.user.list');
+    ->name('get.user.list'); */
 
 // dzięki poniższym zapisom z chain only możemy sobie zdefiniować, które adresy mają być widoczne dla wszystkich, a które tylko dla admina lub w adminie
 /* Route::resource('games', GameController::class)

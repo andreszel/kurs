@@ -1,105 +1,22 @@
 @extends('layout.main')
 
 @section('content')
-    <h1>Users list</h1>
-    <h4>Foreach iteration loop</h4>
-    <table>
-        <thead>
-            <th>Index</th>
-            <th>Iteration</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Opcje</th>
-        </thead>
-        <tbody>
-            @foreach($users AS $user)
-                @if ($loop->first)
-                    <tr><td colspan="5">FIRST</td</tr>
-                @endif
-                <tr>
-                    <td>{{ $loop->index }}</td>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $user['id'] }}</td>
-                    <td>{{ $user['name'] }}</td>
-                    <td>Link</td>
-                </tr>
-                @if ($loop->last)
-                    <tr><td colspan="5">LAST</td</tr>
-                @endif
-            @endforeach
-        </tbody>
-    </table>
-    <hr>
-    <hr>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nick</th>
-                <th>Opcje</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr>
-            <td colspan="3"><h4>EACH</h4></td>
-        </tr> 
-            @each('user.listRow', $users, 'userData', 'user.emptyRow')
-        <tr>
-            <td colspan="3"><h4>FOREACH</h4></td>
-        </tr>    
-            @foreach ($users as $user)
-                @include('user.listRow', ['userData'=>$user])
-            @endforeach
-            <tr>
-                <td colspan="3"><h4>FOR</h4></td>
-            </tr>  
-            @for($i = 0; $i < count($users); $i++)
-                
-                @include('user.listRow', ['userData'=>$users[$i]])
-
-            @endfor
-
-            <tr>
-                <td colspan="3"><h4>FORELSE</h4></td>
-            </tr> 
-            @forelse ($users AS $user)
-                @include('user.listRow', ['userData'=>$user])
-            @empty
-                    <tr>
-                        <td>Lista jest pusta</td>
-                    </tr>
-            @endforelse
-
-            <tr>
-                <td colspan="3"><h4>WHILE</h4></td>
-            </tr> 
-            @php
-                $u = 0;
-                $count = count($users);
-            @endphp
-            @while ($u < $count)
-                
-                @include('user.listRow', ['userData'=>$users[$u]])
-                
-                @php
-                    $u++;
-                @endphp
-            @endwhile
-        </tbody>
-    </table>
-
-<h4>SWITCH</h4>
-    
-    @switch($type)
-        @case(1)
-            CASE 1
-            @break
-        @case(2)
-            CASE 2
-            @break
-        @default
-            DEFAULT
-    @endswitch
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table"></i> Lista użytkowników</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <th>Lp</th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Opcje</th>
+                </thead>
+                <tbody>
+                    @each('user.listRow', $users, 'userData', 'user.emptyRow')
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection

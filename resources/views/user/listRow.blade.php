@@ -1,4 +1,5 @@
-<tr>
+<tr id="row-idx-{{ $loop->index }}">
+    <td>{{ $loop->iteration }}</td>
     <td>{{ $userData['id'] }}</td>
     <td>{{ $userData['name'] }}</td>
     <td>
