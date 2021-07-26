@@ -1,31 +1,4 @@
-<?php
-
-declare(strict_types=1);
-
-namespace App\Http\Controllers\Home;
-
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-class MainPage extends Controller
-{
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        return view('home.main');
-        
-        //$db = \DB::connection('gameworld');
-        //dd($db);
-        //$config = config('app.name');
-
-        //jak umieszczać rekordy w bazie danych
+//jak umieszczać rekordy w bazie danych
         //czyści tablicę i resetuje klucz główny
         DB::table('genres')->truncate();
         //czyści tabelę, ale nie resetuje klucza głównego
@@ -112,5 +85,17 @@ class MainPage extends Controller
         DB::table('genres')
             ->where('id', 15)
             ->delete();
-    }
-}
+
+
+SEEDERY 
+
+- musimy na początku podjąć decyzję jak używamy seederów 
+- czy uruchamiamy wiele razy czy tylko raz
+- jeżeli wiele razy to albo
+- jeden sposób to usuwanie obecne i dodajemy wszystkie od nowa
+- albo
+- drugi sposób możemy dodawać cały czas przyrostowo
+
+jeżeli chcemy z palca uruchomić pojedynczego seeda
+php artisan db:seed --class=GamesSeeder
+

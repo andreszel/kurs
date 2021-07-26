@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -53,14 +54,22 @@ class GameController extends Controller
         
         $faker = Factory::create();
 
-        $game = [
+/*         $game = [
                 'name' => $faker->name,
                 'number' => $faker->numberBetween(1,100),
                 'copies' => $faker->numberBetween(1,100),
                 'activate' => $faker->boolean,
                 'message' => 'Game added. Thank you.',
                 'author' => $requestName
-            ];
+            ]; */
+        $game = [
+                    'title' => $faker->words($faker->numberBetween(1,3), true),
+                    'description' => $faker->sentence,
+                    'publisher' => $faker->randomElement(['Atari','EA','Blizzard','Ubisoft','Sega','Sony','Nintendo']),
+                    'genre_id' => $faker->numberBetween(1,5),
+                    'created_at'=>Carbon::now(),
+                    'updated_at'=>Carbon::now()
+                ];
         return response()->json($game);
     }
 
