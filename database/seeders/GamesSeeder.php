@@ -35,7 +35,7 @@ class GamesSeeder extends Seeder
         // żeby to zrobić szybciej to robimy tablicę, która przekazujemy do zapytania i wykonujemy wtedy jedno zapytanie
 
         $games = [];
-        for($j=0;$j<10;$j++){
+        for($j=0;$j<1;$j++){
             for($i=0;$i<100;$i++){
                 $games[] = [
                     'title' => $faker->words($faker->numberBetween(1,3), true),
@@ -44,7 +44,8 @@ class GamesSeeder extends Seeder
                     'publisher_id' => $faker->numberBetween(1,7),
                     'genre_id' => $faker->numberBetween(1,5),
                     'created_at'=>Carbon::now(),
-                    'updated_at'=>Carbon::now()
+                    'updated_at'=>Carbon::now(),
+                    'score' => $faker->numberBetween(1,10)
                 ];
             } 
             DB::table('games')->insert($games);

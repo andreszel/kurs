@@ -32,6 +32,22 @@ Route::get('user/profile/{id}/address', 'User\ShowAddress')
     ->where(['id' => '[0-9]+'])
     ->name('get.user.address');
 
+Route::get('games/dashboard', 'GameController@dashboard')
+    ->name('games.dashboard');
+
+Route::resource('games', 'GameController')
+    ->only([
+        'index', 'show'
+    ]);
+
+Route::resource('admin/games', 'GameController')
+        ->only([
+            'store', 'create', 'destroy'
+        ]);
+
+Route::get('games/{gameId}', 'GameController@show')
+    ->name('show.game');
+
 /* Route::get('/goodbye/{name}', function (string $name) {
     return 'Goodbaye: ' . $name;
 }); */

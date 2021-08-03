@@ -5,17 +5,132 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class GameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    // CRUD
+    // C - create
+    // R - 
+    // U - update
+    // D - delete
+
+    public function index(): View
     {
-        $faker = Factory::create();
+        // wszystkie kolumny
+        //$games = DB::table('games')->get();
+        //tylko wybrane kolumny
+        /* $games = DB::table('games')
+            ->select('id', 'title', 'score', 'genre_id')
+            ->get(); */
+        $games = DB::table('games')
+            ->join('genres', 'games.genre_id', '=', 'genres.id')
+            ->join('publishers', 'games.publisher_id', '=', 'publishers.id')
+            ->select(
+                'games.id', 'games.title', 'games.score',
+                'genres.name AS genre_name',
+                'publishers.name AS publisher_name'
+            )
+            //->orderBy('title', 'asc')
+            //->limit(5)
+            //->offset(0)
+            //->get();
+            ->paginate(10);
+            //->simplePaginate(10);
+
+        // jeżeli dodajemy paginate(), simplePaginate(), get() to w odpowiedzi dostajemy JSONa
+        
+        return view('games.list', [
+            'games' => $games
+        ]);
+    }
+
+    public function dashboard(): View
+    {
+        $bestGames = DB::table('games')
+            ->join('genres', 'games.genre_id', '=', 'genres.id')
+            ->join('publishers', 'games.publisher_id', '=', 'publishers.id')
+            ->select(
+                'games.id', 'games.title', 'games.score',
+                'genres.name AS genre_name',
+                'publishers.name AS publisher_name'
+            )
+            ->where('score', '>', 9)
+            //->where('score', 90) //uproszczona składnia to 2 args, domyślnie jest =
+            ->orderBy('score', 'desc')
+            //->orderByDesc('score')
+            ->get();
+        
+        // UWAGA !!!
+        // jeżeli nie dodamy ->get() to możemy podejrzeć zapytanie
+        //dd($bestGames->toSql());
+
+        // Więcej niż jeden warunek, pomiędzy warunkami AND
+        /*
+            $query = DB::table('games')
+                ->select('id', 'title', 'score', 'genre_id')
+                ->where([
+                    ['score', '>', 90],
+                    ['id', 55]
+                ]);
+        */
+        // jeżeli więcej niż jeden warunek, ale z OR
+        /*
+        $query = DB::table('games')
+            ->select('id', 'title', 'score', 'genre_id')
+            ->where('score', '>', 95)
+            ->orWhere('id', 55);
+        */
+
+        // sprawdzanie czy coś znajduje się w czymś
+        /*
+        $query = DB::table('games')
+            ->select('id', 'title', 'score', 'genre_id')
+            ->whereIn('id', [22,42,53]);
+        */
+        
+        // sprawdzanie pomiędzy
+        /* $query = DB::table('games')
+            ->select('id', 'title', 'score', 'genre_id')
+            ->whereBetween('id', [22,55]); */
+        
+        
+        
+        // FUNKCJE AGREGUJĄCE
+        //$minScore = DB::table('games')->min('score');
+        //$maxScore = DB::table('games')->max('score');
+        //$avgScore = DB::table('games')->avg('score');
+
+        $stats = [
+            'count' => DB::table('games')->count(),
+            'countScoreGtFive' => DB::table('games')->where('score', '>', 7)->count(),
+            'min' => DB::table('games')->min('score'),
+            'max' => DB::table('games')->max('score'),
+            'avg' => DB::table('games')->avg('score')
+        ];
+
+        $scoreStats = DB::table('games')
+            ->select('score', DB::raw('count(*) AS count'))
+            ->having('count', '>', 10)
+            ->groupBy('score')
+            ->orderBy('count', 'desc')
+            ->get();
+        /* $scoreStats = DB::table('games')
+            ->select('score', DB::raw('count(*) AS count'))
+            ->having('count', '>', 10)
+            ->groupBy('score')
+            ->orderBy('score', 'desc')
+            ->get(); */
+        //dd($scoreStats);
+
+        return view('games.dashboard', [
+            'bestGames' => $bestGames,
+            'stats' => $stats,
+            'scoreStats' => $scoreStats
+        ]);
+
+        /* $faker = Factory::create();
         $games = [];
 
         for($i = 0; $i < 10; $i++){
@@ -26,9 +141,29 @@ class GameController extends Controller
                 'activate' => $faker->boolean
             ];
             array_push($games, $game);
-        }
-        
-        return view('games.list', ['games' => $games]);
+        } */
+    }
+
+    public function show(int $gameId): View
+    {
+        // jeżeli odwołujemy się kilka razy do tej samej tabeli to robimy zmienną pomocniczą i odwołujemy się za pomocą niej, a nie za każdym razem powtarzamy
+        //$gamesTable = DB::table('games');
+        //$gamesTable->select();
+
+        // jeżeli nie potrzebujemy tablicy z jednym elementem to pobieramy w innym sposób, np. first() lub findById
+        //$game = DB::table('games')->where('id', $gameId)->get();
+        //$game = DB::table('games')->where('id', $gameId)->first();
+        $game = DB::table('games')->find($gameId);
+
+        /**
+         * UWAGA
+         * Ostatnie dwa sposoby działają tak samo, ale find działa zawsze z kluczem głównym
+         * Gdyby nie było id, zostanie zwrócony null, w widoku sprawdzamy funkcją empty, jeżeli będzie null to brak danych
+         */
+
+        return view('games.show', [
+            'game' => $game
+        ]);
     }
 
     /**
@@ -73,16 +208,6 @@ class GameController extends Controller
         return response()->json($game);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

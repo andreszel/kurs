@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterGameTable extends Migration
+class CreateCacheTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AlterGameTable extends Migration
      */
     public function up()
     {
-        Schema::table('games', function(Blueprint $table){
-            $table->integer('game_id')->nullable();
+        Schema::create('cache', function (Blueprint $table) {
+            $table->string('key')->unique();
+            $table->mediumText('value');
+            $table->integer('expiration');
         });
     }
 
@@ -25,8 +27,6 @@ class AlterGameTable extends Migration
      */
     public function down()
     {
-        Schema::table('games', function(Blueprint $table){
-            $table->dropColumn('game_id');
-        });
+        Schema::dropIfExists('cache');
     }
 }

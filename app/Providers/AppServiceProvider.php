@@ -28,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
         // używamy ich bezpośrednio w widoku
         view()->share('appName', 'Świat GIER');
         View::share('titleName', 'Games App');
+        //Schema::defaultStringLength(191);
     }
 }

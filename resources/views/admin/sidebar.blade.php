@@ -31,7 +31,30 @@
                     <span>Użytkownicy</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-plus"></i>
+                    <span>Dodaj</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                <span class="text-uppercase">Gry</span>
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('games.dashboard') }}">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('games.index') }}">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Lista</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
                     <i class="fas fa-plus"></i>
                     <span>Dodaj</span></a>
             </li>
