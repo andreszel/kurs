@@ -38,10 +38,10 @@
                 </tfoot>
                 <tbody>
                     @foreach($scoreStats ?? [] as $stat)
-                        <tr>
-                            <td>{{ $stat->score }}</td>
-                            <td>{{ $stat->count }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $stat->score }}</td>
+                        <td>{{ $stat->count }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -78,16 +78,16 @@
                 </tfoot>
                 <tbody>
                     @foreach($bestGames ?? [] as $game)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $game->title }}</td>
-                            <td>{{ $game->score }}</td>
-                            <td>{{ $game->genre_name }}</td>
-                            <td>{{ $game->publisher_name }}</td>
-                            <td>
-                                <a href="{{ route('show.game', ['gameId' => $game->id]) }}">Szczegóły</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $game->title }}</td>
+                        <td>{{ $game->score }}</td>
+                        <td>{{ $game->genre->name }}</td>
+                        <td>{{ $game->publisher->name }}</td>
+                        <td>
+                            <a href="{{ route('games.e.show', ['gameId' => $game->id]) }}">Szczegóły</a>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

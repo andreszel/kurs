@@ -7,21 +7,31 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MainPage extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    //public function __invoke(Request $request)
+    public function __invoke()
     {
+        //$user = Auth::user();
+        //$user = $request->user();
+        //dd($user);
+        //$id = Auth::id();
+        //dd($id);
+
+        // czy user jest zalogowany w akcji
+        if (Auth::check()) {
+            dump('Jesteś zalogowany!');
+        }
+
+        // wylogowanie usera
+        //Auth::logout();
+
         return view('home.main');
-        
-        //$db = \DB::connection('gameworld');
+
+        /* //$db = \DB::connection('gameworld');
         //dd($db);
         //$config = config('app.name');
 
@@ -111,6 +121,6 @@ class MainPage extends Controller
         //jak usunąć rekord
         DB::table('genres')
             ->where('id', 15)
-            ->delete();
+            ->delete(); */
     }
 }

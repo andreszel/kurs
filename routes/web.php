@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+//use App\Http\Middleware\RequestLog;
+
+use App\Http\Middleware\Pagination;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\HelloController;
 
@@ -16,38 +20,91 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Home\MainPage')
-    ->name('home.mainPage');
+//Route::group(['middleware' => ['auth']], function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'Home\MainPage')
+        ->name('home.mainPage');
 
-Route::get('users', 'UserController@list')
-    ->name('get.users');
+    Route::get('users', 'UserController@list')
+        ->name('get.users');
 
-Route::get('users/{userId}', 'UserController@show')
-    ->name('get.user.show');
+    Route::get('users/{userId}', 'UserController@show')
+        ->name('get.user.show');
 
-/* Route::get('users/{id}/profile', 'User\ProfileController@show')
-    ->name('get.user.show'); */
+    /* Route::get('users/{id}/profile', 'User\ProfileController@show')
+        ->name('get.user.show'); */
 
-Route::get('user/profile/{id}/address', 'User\ShowAddress')
-    ->where(['id' => '[0-9]+'])
-    ->name('get.user.address');
+    Route::get('user/profile/{id}/address', 'User\ShowAddress')
+        ->where(['id' => '[0-9]+'])
+        ->name('get.user.address');
 
-Route::get('games/dashboard', 'GameController@dashboard')
-    ->name('games.dashboard');
-
-Route::resource('games', 'GameController')
-    ->only([
-        'index', 'show'
-    ]);
-
-Route::resource('admin/games', 'GameController')
+    // Sposób 1
+    /* Route::resource('games', 'GameQBuilderController')
         ->only([
-            'store', 'create', 'destroy'
-        ]);
+            'index', 'show'
+        ]); */
 
-Route::get('games/{gameId}', 'GameController@show')
-    ->name('show.game');
+    // GAMES Query builder
+    Route::group([
+        'prefix' => 'b/games',
+        'namespace' => 'Game',
+        'as' => 'games.qb.'
+    ], function () {
+        Route::get('dashboard', 'GameQBuilderController@dashboard')
+            ->name('dashboard');
 
+        // Sposób 2
+        Route::get('/', 'GameQBuilderController@index')
+            ->name('list')
+            ->middleware(Pagination::class);
+
+        Route::get('/{gameId}', 'GameQBuilderController@show')
+            ->name('show');
+    });
+
+    // GAMES Eloquent
+    Route::group([
+        'prefix' => 'e/games',
+        'namespace' => 'Game',
+        'as' => 'games.e.',
+        'middleware' => ['profiling']
+    ], function () {
+        Route::get('dashboard', 'GameEloquentController@dashboard')
+            ->name('dashboard');
+
+        // Sposób 2
+        Route::get('/', 'GameEloquentController@index')
+            ->name('list')
+            ->middleware(Pagination::class);
+
+        Route::get('/{gameId}', 'GameEloquentController@show')
+            ->name('show');
+        //->middleware(['profiling']);
+        //Route::middleware([RequestLog::class])->group(
+        /* Route::middleware(['profiling'])->group(
+            function () {
+                Route::get('dashboard', 'GameEloquentController@dashboard')
+                    ->name('dashboard');
+
+                // Sposób 2
+                Route::get('/', 'GameEloquentController@index')
+                    ->name('list');
+
+                Route::get('/{gameId}', 'GameEloquentController@show')
+                    ->name('show');
+            }
+        ); */
+    });
+
+    //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
+Auth::routes();
+
+/* Route::resource('admin/games', 'Game\GameQBuilderController')
+    ->only([
+        'store', 'create', 'destroy'
+    ]); */
 /* Route::get('/goodbye/{name}', function (string $name) {
     return 'Goodbaye: ' . $name;
 }); */

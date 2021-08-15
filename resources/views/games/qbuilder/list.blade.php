@@ -31,16 +31,16 @@
                 </tfoot>
                 <tbody>
                     @foreach($games ?? [] as $game)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $game->title }}</td>
-                            <td>{{ $game->score }}</td>
-                            <td>{{ $game->genre_name }}</td>
-                            <td>{{ $game->publisher_name }}</td>
-                            <td>
-                                <a href="{{ route('show.game', ['gameId' => $game->id]) }}">Szczegóły</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $game->title }}</td>
+                        <td>{{ $game->score }}</td>
+                        <td>{{ $game->genre_name }}</td>
+                        <td>{{ $game->publisher_name }}</td>
+                        <td>
+                            <a href="{{ route('games.qb.show', ['gameId' => $game->id]) }}">Szczegóły</a>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

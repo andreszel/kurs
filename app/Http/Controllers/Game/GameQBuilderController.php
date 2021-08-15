@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Game;
 
 use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
-class GameController extends Controller
+class GameQBuilderController extends Controller
 {
     // CRUD
     // C - create
@@ -28,7 +29,9 @@ class GameController extends Controller
             ->join('genres', 'games.genre_id', '=', 'genres.id')
             ->join('publishers', 'games.publisher_id', '=', 'publishers.id')
             ->select(
-                'games.id', 'games.title', 'games.score',
+                'games.id',
+                'games.title',
+                'games.score',
                 'genres.name AS genre_name',
                 'publishers.name AS publisher_name'
             )
@@ -37,11 +40,11 @@ class GameController extends Controller
             //->offset(0)
             //->get();
             ->paginate(10);
-            //->simplePaginate(10);
+        //->simplePaginate(10);
 
         // jeżeli dodajemy paginate(), simplePaginate(), get() to w odpowiedzi dostajemy JSONa
-        
-        return view('games.list', [
+
+        return view('games.qbuilder.list', [
             'games' => $games
         ]);
     }
@@ -52,7 +55,9 @@ class GameController extends Controller
             ->join('genres', 'games.genre_id', '=', 'genres.id')
             ->join('publishers', 'games.publisher_id', '=', 'publishers.id')
             ->select(
-                'games.id', 'games.title', 'games.score',
+                'games.id',
+                'games.title',
+                'games.score',
                 'genres.name AS genre_name',
                 'publishers.name AS publisher_name'
             )
@@ -61,7 +66,7 @@ class GameController extends Controller
             ->orderBy('score', 'desc')
             //->orderByDesc('score')
             ->get();
-        
+
         // UWAGA !!!
         // jeżeli nie dodamy ->get() to możemy podejrzeć zapytanie
         //dd($bestGames->toSql());
@@ -89,14 +94,14 @@ class GameController extends Controller
             ->select('id', 'title', 'score', 'genre_id')
             ->whereIn('id', [22,42,53]);
         */
-        
+
         // sprawdzanie pomiędzy
         /* $query = DB::table('games')
             ->select('id', 'title', 'score', 'genre_id')
             ->whereBetween('id', [22,55]); */
-        
-        
-        
+
+
+
         // FUNKCJE AGREGUJĄCE
         //$minScore = DB::table('games')->min('score');
         //$maxScore = DB::table('games')->max('score');
@@ -124,7 +129,7 @@ class GameController extends Controller
             ->get(); */
         //dd($scoreStats);
 
-        return view('games.dashboard', [
+        return view('games.qbuilder.dashboard', [
             'bestGames' => $bestGames,
             'stats' => $stats,
             'scoreStats' => $scoreStats
@@ -161,7 +166,7 @@ class GameController extends Controller
          * Gdyby nie było id, zostanie zwrócony null, w widoku sprawdzamy funkcją empty, jeżeli będzie null to brak danych
          */
 
-        return view('games.show', [
+        return view('games.qbuilder.show', [
             'game' => $game
         ]);
     }
@@ -173,7 +178,6 @@ class GameController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -186,10 +190,10 @@ class GameController extends Controller
     {
         $requestName = $request->input('name');
         $test = $request->input('test');
-        
+
         $faker = Factory::create();
 
-/*         $game = [
+        /*         $game = [
                 'name' => $faker->name,
                 'number' => $faker->numberBetween(1,100),
                 'copies' => $faker->numberBetween(1,100),
@@ -198,13 +202,13 @@ class GameController extends Controller
                 'author' => $requestName
             ]; */
         $game = [
-                    'title' => $faker->words($faker->numberBetween(1,3), true),
-                    'description' => $faker->sentence,
-                    'publisher' => $faker->randomElement(['Atari','EA','Blizzard','Ubisoft','Sega','Sony','Nintendo']),
-                    'genre_id' => $faker->numberBetween(1,5),
-                    'created_at'=>Carbon::now(),
-                    'updated_at'=>Carbon::now()
-                ];
+            'title' => $faker->words($faker->numberBetween(1, 3), true),
+            'description' => $faker->sentence,
+            'publisher' => $faker->randomElement(['Atari', 'EA', 'Blizzard', 'Ubisoft', 'Sega', 'Sony', 'Nintendo']),
+            'genre_id' => $faker->numberBetween(1, 5),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ];
         return response()->json($game);
     }
 
