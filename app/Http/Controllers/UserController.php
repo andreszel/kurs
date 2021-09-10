@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class UserController extends Controller
 {
     public function list(Request $request)
     {
-        $users = [];
+        /* $users = [];
         $usersEmpty = [];
         $faker = Factory::create();
         $count = $faker->numberBetween(3,15);
@@ -26,7 +27,10 @@ class UserController extends Controller
         $ok = $faker_session->numberBetween(0,1);
 
         $session = $request->session();
-        $session->flash('ok', $ok);
+        $session->flash('ok', $ok); */
+
+        $users = User::orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('user.list', [
             'users' => $users
@@ -35,19 +39,20 @@ class UserController extends Controller
 
     public function show(Request $request, int $userId)
     {
-        $faker = Factory::create();
+        /* $faker = Factory::create();
         $user = [
             'id' => $userId,
             'name' => $faker->name,
             'firstName' => $faker->firstName,
             'lastName' => $faker->lastName,
             'city' => $faker->city,
-            'age' => $faker->numberBetween(12,25),
+            'age' => $faker->numberBetween(12, 25),
             'html' => '<b>Bold HTML</b>'
-        ];
+        ]; */
+        $user = User::find($userId);
 
         return view('user.show', [
-            'user'=>$user,
+            'user' => $user,
             'nick' => true
         ]);
     }

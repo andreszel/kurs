@@ -96,6 +96,25 @@ Route::middleware(['auth'])->group(function () {
         ); */
     });
 
+    // GAMES Eloquent
+    Route::group([
+        'prefix' => 'games',
+        'namespace' => 'Game',
+        'as' => 'games.',
+        'middleware' => ['profiling']
+    ], function () {
+        Route::get('dashboard', 'GameController@dashboard')
+            ->name('dashboard');
+
+        // Sposób 2
+        Route::get('/', 'GameController@index')
+            ->name('list')
+            ->middleware(Pagination::class);
+
+        Route::get('/{gameId}', 'GameController@show')
+            ->name('show');
+    });
+
     //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
