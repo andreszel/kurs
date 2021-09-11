@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Game;
 
-use App\Models\Game;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\RequestLog;
+//use App\Repository\Builder\GameRepository;
+//use App\Repository\Eloquent\GameRepository;
 use App\Repository\GameRepository;
+// Tutaj nie o to chodzi, żeby podmieniać repository, tylko żeby wstrzykiwać interface
+// w naszym przypadku musimy zapoznać się z service providerami, żeby naprawić błąd
+// Illuminate\Contracts\Container\BindingResolutionException
+
+/**
+ * obie implementacja builder, eloquent muszą zwracać te same dane, tą samą strukturę
+ */
 
 class GameController extends Controller
 {
