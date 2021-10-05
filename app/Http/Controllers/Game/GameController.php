@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Game;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Repository\GameRepository;
 use App\Http\Controllers\Controller;
 //use App\Repository\Builder\GameRepository;
 //use App\Repository\Eloquent\GameRepository;
-use App\Repository\GameRepository;
 // Tutaj nie o to chodzi, żeby podmieniać repository, tylko żeby wstrzykiwać interface
 // w naszym przypadku musimy zapoznać się z service providerami, żeby naprawić błąd
 // Illuminate\Contracts\Container\BindingResolutionException
