@@ -86,7 +86,7 @@ class GameRepository implements GameRepositoryInterface
                 )
                 ->latest('games.created_at')
                 ->forPage($currentPage, $limit)
-                ->get()
+                ->get()//zwracana jest kolekcja, a metoda map() działa na kolekcji
                 ->map(fn ($row) => $this->createGame($row));
         }
 
@@ -126,7 +126,7 @@ class GameRepository implements GameRepositoryInterface
             )
             ->where('score', '>', 9)
             ->orderBy('score', 'desc')
-            ->get()
+            ->get()//zwracana jest kolekcja, a metoda map() działa na kolekcji
             ->map(fn ($row) => $this->createGame($row)); // jeżeli zwrócilibyśmy data, to jest problem z items, stosujemy mapowanie danych, używamy map() z argumentem
 
         return $data;
@@ -155,11 +155,13 @@ class GameRepository implements GameRepositoryInterface
 
     private function createGame(stdClass $game): stdClass
     {
+        // tworzymy obiekty standardowej klasy, które zwracają
         $genre = new stdClass();
         $genre->name = $game->genre_name;
 
         $publisher = new stdClass();
         $publisher->name = $game->publisher_name;
+
 
         $game->genre = $genre;
         $game->publisher = $publisher;
