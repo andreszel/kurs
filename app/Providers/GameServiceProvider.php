@@ -21,7 +21,7 @@ class GameServiceProvider extends ServiceProvider
             EloquentGameRepository::class
         );
 
-        $this->app->singleton('game', GameRepository::class);
+        //$this->app->singleton('game', GameRepository::class);
 
         /* $this->app->when(GameQBuilderController::class)
             ->needs(BuilderGameRepository::class)

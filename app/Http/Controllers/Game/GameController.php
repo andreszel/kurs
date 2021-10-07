@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Game;
 
+use App\Facade\Game;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Repository\GameRepository;
@@ -28,7 +29,8 @@ class GameController extends Controller
     public function index(): View
     {
         return view('games.game.list', [
-            'games' => $this->gameRepository->allPaginated(10)
+            //'games' => $this->gameRepository->allPaginated(10)
+            'games' => Game::allPaginated(10)
         ]);
     }
 
