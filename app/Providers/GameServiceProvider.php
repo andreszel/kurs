@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repository\Builder\GameRepository as BuilderGameRepository;
 use App\Repository\GameRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Eloquent\GameRepository as EloquentGameRepository;
@@ -21,6 +22,10 @@ class GameServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton('game', GameRepository::class);
+
+        /* $this->app->when(GameQBuilderController::class)
+            ->needs(BuilderGameRepository::class)
+            ->give(GameRepository::class) */
     }
 
     /**
