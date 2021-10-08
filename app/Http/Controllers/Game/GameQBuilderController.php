@@ -51,6 +51,7 @@ class GameQBuilderController extends Controller
 
     public function dashboard(): View
     {
+        dd('zakładka wyłączona, obecna wersja jest zrobiona profesjonalnie i nie działa z tym co tutaj jest, bo to są testy buildera');
         $bestGames = DB::table('games')
             ->join('genres', 'games.genre_id', '=', 'genres.id')
             ->join('publishers', 'games.publisher_id', '=', 'publishers.id')

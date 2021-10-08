@@ -9,7 +9,7 @@
     <div class="card-body">
         <ul>
             <li>Liczba gier: {{ $stats['count'] }}</li>
-            <li>Liczba gier 7+: {{ $stats['countScoreGtFive'] }}</li>
+            <li>Liczba gier 70+: {{ $stats['countScoreGtSeventy'] }}</li>
             <li>Min ocena: {{ $stats['min'] }}</li>
             <li>Max ocena: {{ $stats['max'] }}</li>
             <li>Średnia ocena: {{ $stats['avg'] }}</li>
@@ -51,7 +51,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table"></i> Najlepsze gry 9+</h6>
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table"></i> Najlepsze gry 75+</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -80,10 +80,10 @@
                     @foreach($bestGames ?? [] as $game)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $game->title }}</td>
+                        <td>{{ $game->name }}</td>
                         <td>{{ $game->score }}</td>
-                        <td>{{ $game->genre->name }}</td>
-                        <td>{{ $game->publisher->name }}</td>
+                        <td>{{ $game->genres->implode('name', ',') }}</td>
+                        <td>{{ $game->publishers->implode('name', ',') }}</td>
                         <td>
                             <a href="{{ route('games.show', ['gameId' => $game->id]) }}">Szczegóły</a>
                         </td>

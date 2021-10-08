@@ -33,10 +33,10 @@
                     @foreach($games ?? [] as $game)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $game->title }}</td>
-                        <td>{{ $game->score }}</td>
-                        <td>{{ $game->genre->name }}</td>
-                        <td>{{ $game->publisher->name }}</td>
+                        <td>{{ $game->name }}</td>
+                        <td>{{ $game->metacritic_score }}</td>
+                        <td>{{ $game->genres->implode('name', ',') }}</td>
+                        <td>{{ $game->publishers->implode('name', ',') }}</td>
                         <td>
                             <a href="{{ route('games.show', ['gameId' => $game->id]) }}">Szczegóły</a>
                         </td>

@@ -29,8 +29,8 @@ class GameController extends Controller
     public function index(): View
     {
         return view('games.game.list', [
-            //'games' => $this->gameRepository->allPaginated(10)
-            'games' => Game::allPaginated(10)
+            'games' => $this->gameRepository->allPaginated(10)
+            //'games' => Game::allPaginated(10)
         ]);
     }
 

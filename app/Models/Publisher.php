@@ -13,4 +13,8 @@ class Publisher extends Model
     {
         return $this->hasMany(Game::class);
     }*/
+    public function games()
+    {
+        return $this->belongsToMany('App\Models\Game','gamePublishers');
+    }
 }
