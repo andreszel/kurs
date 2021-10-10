@@ -42,7 +42,7 @@ class AlterModelTables extends Migration
         Schema::create('gameGenres', function (Blueprint $table) {
             $table->integer('game_id')->index();
             $table->integer('genre_id')->index();
-            
+
             $table->index(['game_id', 'genre_id']);
         });
 
