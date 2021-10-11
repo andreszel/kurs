@@ -11,6 +11,7 @@
     <div class="card-body">
         <ul>
             <li>Id: {{ $game->id }}</li>
+            <li>Steam appid: {{ $game->steam_appid }}</li>
             <li>Nazwa: {{ $game->name }}</li>
             <li>Wydawca: {{ $game->publishers->implode('name', ',') }}</li>
             <li>Kategoria: {{ $game->genres->implode('name', ',') }}</li>

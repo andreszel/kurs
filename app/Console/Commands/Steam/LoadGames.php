@@ -158,7 +158,8 @@ class LoadGames extends Command
 
             //zwiększamy progress bar
             $progressDb->advance();
-            $this->info(" - " . $appId . ": " .$data[$appId]['data']['name']);
+            $metacritic_score = !empty($data[$appId]['data']['metacritic']['score']) ? (int)$data[$appId]['data']['metacritic']['score'] : '--';
+            $this->info(" - " . $appId . ' - score: ' . $metacritic_score . " : " .$data[$appId]['data']['name']);
         }
 
         $progressDb->finish();
