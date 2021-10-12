@@ -26,10 +26,23 @@ class GameController extends Controller
         $this->gameRepository = $repository;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
+        $phrase = $request->get('phrase');
+        $type = $request->get('type',  GameRepository::TYPE_DEFAULT);
+        $limit = $request->get('limit', GameRepository::LIMIT_DEFAULT);
+
+        $resultPaginator = $this->gameRepository->filterBy($phrase, $type, $limit);
+        $resultPaginator->appends([
+            'phrase' => $phrase,
+            'type' => $type
+        ]);
+
         return view('games.game.list', [
-            'games' => $this->gameRepository->allPaginated(10)
+            'games' => $resultPaginator,
+            'phrase' => $phrase,
+            'type' => $type
+            //'games' => $this->gameRepository->allPaginated(10)
             //'games' => Game::allPaginated(10)
         ]);
     }
