@@ -31,12 +31,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/{userId}', 'UserController@show')
         ->name('get.user.show');
 
-    /* Route::get('users/{id}/profile', 'User\ProfileController@show')
-        ->name('get.user.show'); */
-
     Route::get('user/profile/{id}/address', 'User\ShowAddress')
         ->where(['id' => '[0-9]+'])
         ->name('get.user.address');
+
+    /* Route::get('users/{id}/profile', 'User\ProfileController@show')
+        ->name('get.user.show'); */
 
     // Sposób 1
     /* Route::resource('games', 'GameQBuilderController')
@@ -116,6 +116,20 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // USER - ME
+    Route::group([
+        'prefix' => 'me',
+        'namespace' => 'User',
+        'as' => 'me.'
+    ], function () {
+        Route::get('profile', 'UserController@profile')
+            ->name('profile');
+        Route::get('edit', 'UserController@edit')
+            ->name('edit');
+        Route::post('update', 'UserController@update')
+            ->name('update');
+    });
 });
 
 Auth::routes();

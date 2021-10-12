@@ -35,6 +35,11 @@
         <i class="fas fa-plus"></i>
         <span>Dodaj</span></a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('me.profile') }}">
+        <i class="fas fa-plus"></i>
+        <span>Mój profil</span></a>
+</li>
 
 <!-- Divider -->
 <hr class="sidebar-divider">

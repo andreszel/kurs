@@ -39,25 +39,24 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
                     @include('admin.header')
+                </nav>
 
-                    <!-- Begin Page Content -->
-                    <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-                        @yield('topbar')
+                    @yield('topbar')
 
-                        <!-- Content Row -->
-                        <div class="row">
-                            <div class="col-lg-12 mb-4">
-                                @yield('content')
-                            </div>
+                    <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            @yield('content')
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
