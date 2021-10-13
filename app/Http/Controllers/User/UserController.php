@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,20 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    // obiekt powstaje przez uruchomieniem kontrolera, i walidacja jest również przed uruchomieniem kontrolera
+    public function update(UpdateUserProfile $request)
+    {
+        // logika zapisu danych, które przeszły już walidację, w klasie UpdateUserProfile
+        $data = $request->validated();
+
+        
+
+        return redirect()
+            ->route('me.profile')
+            ->with('status', 'Profil zaktualizowany');
+    }
+
+    public function updateValidationRules(Request $request)
     {
         // docs - validation, avalable validation rules
         //name, email, phone
