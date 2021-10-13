@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                     <label for="name">Nazwa</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $user->name }}">
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}">
                     @error('name')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -36,7 +36,7 @@
 
                 <div class="form-group">
                     <label for="email">Adres email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $user->email }}">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}">
                     @error('email')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                     <label for="phone">Telefon</label>
-                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ $user->phone }}">
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $user->phone) }}">
                     @error('phone')
                         <div class="invalid-feedback d-block">
                             {{ $message }}

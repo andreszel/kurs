@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\AlphaSpaces;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -34,6 +35,9 @@ class UpdateUserProfile extends FormRequest
         ]; */
 
         //'unique:users' alternatywa dla krótszego zapisu Rule::unique('users'),
+        // jak używać własnej reguły walidacji new AlphaSpaces()
+        // tworzenie to make:rule, katalog Rule
+        // jeżeli w regułach, które daje framework to tworzymy sobie własną
 
         $userId = Auth::id();
 
@@ -44,7 +48,11 @@ class UpdateUserProfile extends FormRequest
                 Rule::unique('users')->ignore($userId),
                 'email'
             ],
-            'name' => 'required|max:50'
+            'name' => [
+                'required',
+                'max:50',
+                new AlphaSpaces()
+            ]
         ];
     }
 
