@@ -29,12 +29,12 @@ return [
     */
 
     'disks' => [
-
+        // pliki, do których nie dostaniemy się przez http
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        // pliki, do których dostaniemy się przez http
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
