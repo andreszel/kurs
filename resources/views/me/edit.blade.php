@@ -16,18 +16,25 @@
             </div>
         @endif
 
+            @if ($user->avatar)
+                <div class="col-md-2 text-center">
+                    <img src="{{ Storage::url($user->avatar) }}" alt="User avatar default" class="rounded mx-auto d-block mb-5">
+                    <form method="POST" action="{{ route('me.avatar.delete')}}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-trash"></i> Usuń avatar
+                        </button>
+                    </form>
+                </div>
+            @else
+                <div class="col-md-2">
+                    <img src="/admin/img/undraw_profile.svg" alt="User avatar default" class="rounded mx-auto d-block mb-5">
+                </div>
+            @endif
+
             <form action="{{ route('me.update') }}" method="post" enctype="multipart/form-data" class="test">
                 @csrf
                 <!-- X-XSRF-TOKEN -->
-                @if ($user->avatar)
-                    <div class="col-md-2">
-                        <img src="{{ Storage::url($user->avatar) }}" alt="User avatar default" class="rounded mx-auto d-block mb-5">
-                    </div>
-                @else
-                    <div class="col-md-2">
-                        <img src="/admin/img/undraw_profile.svg" alt="User avatar default" class="rounded mx-auto d-block mb-5">
-                    </div>
-                @endif
 
                 <div class="form-group">
                     <label for="avatar">Wybierz avatar ...</label>

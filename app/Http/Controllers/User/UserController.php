@@ -6,9 +6,11 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserProfile;
+use App\Models\User;
 use App\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -53,6 +55,8 @@ class UserController extends Controller
                 Storage::disk('public')->delete($user->avatar);
                 $data['avatar'] = $path;
             }
+        }else{
+            $data['avatar'] = $user->avatar;
         }
 
         // logika zapisu danych, które przeszły już walidację, w klasie UpdateUserProfile
@@ -61,6 +65,23 @@ class UserController extends Controller
         return redirect()
             ->route('me.profile')
             ->with('success', 'Profil zaktualizowany');
+    }
+
+    public function deleteAvatar()
+    {
+        //$user = User::find(Auth::id());
+        $user = Auth::user();
+        if(FacadesFile::exists('storage/' . $user->avatar))
+        {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $user->avatar = null;
+        $user->save();
+
+        return redirect()
+            ->route('me.edit')
+            ->with('success', 'Avatar usunięty');
     }
 
     public function updateValidationRules(Request $request)

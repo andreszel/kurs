@@ -129,6 +129,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('edit');
         Route::post('update', 'UserController@update')
             ->name('update');
+        Route::post('profile/avatar/delete', 'UserController@deleteAvatar')
+            ->name('avatar.delete');
     });
 });
 
