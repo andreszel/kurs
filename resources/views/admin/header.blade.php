@@ -65,8 +65,8 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                @if ($user->avatar)
-                    <img src="{{ Storage::url($user->avatar) }}" alt="User avatar default" class="img-profile rounded-circle">
+                @if (Auth::user()->avatar)
+                    <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="User avatar default" class="img-profile rounded-circle">
                 @else
                     <img class="img-profile rounded-circle" alt="User avatar image" src="/admin/img/undraw_profile.svg">
                 @endif
