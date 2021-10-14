@@ -6,7 +6,7 @@
         <div class="card-body">
             @if ($user->avatar)
                 <div class="col-md-2">
-                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="User avatar default" class="rounded mx-auto d-block mb-5">
+                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="User avatar image" class="rounded mx-auto d-block mb-5">
                 </div>
             @else
                 <div class="col-md-2">

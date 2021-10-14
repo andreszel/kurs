@@ -18,7 +18,7 @@
 
             @if ($user->avatar)
                 <div class="col-md-2 text-center">
-                    <img src="{{ Storage::url($user->avatar) }}" alt="User avatar default" class="rounded mx-auto d-block mb-5">
+                    <img src="{{ Storage::url($user->avatar) }}" alt="User avatar image" class="rounded mx-auto d-block mb-5">
                     <form method="POST" action="{{ route('me.avatar.delete')}}">
                         @csrf
                         <button type="submit" class="btn btn-primary">
