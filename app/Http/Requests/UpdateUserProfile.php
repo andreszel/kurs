@@ -55,7 +55,10 @@ class UpdateUserProfile extends FormRequest
             ],
             'phone' => [
                 'min:6'
-            ]
+            ],
+            //'avatar' => 'dimensions:min_width=100,min_height=200,max_width=100,max_height=200'
+            //'avatar' => 'nullable|file|images|dimensions:ratio=3/2'
+            'avatar' => 'nullable|file|image',
         ];
     }
 

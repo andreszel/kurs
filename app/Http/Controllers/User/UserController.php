@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserProfile;
 use App\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -36,14 +37,30 @@ class UserController extends Controller
     // obiekt powstaje przez uruchomieniem kontrolera, i walidacja jest również przed uruchomieniem kontrolera
     public function update(UpdateUserProfile $request)
     {
+        $user = Auth::user();
+        $data = $request->validated();
+
+        //avatar
+        $path = null;
+        if(!empty($data['avatar']))
+        {
+            $path = $data['avatar']->store('avatars', 'public');
+            //$extAvatar = $data['avatar']->extension();
+            //$path = $data['avatar']->storeAs('avatars', Auth::id() . '.' . $extAvatar, 'public');
+    
+            if($path) {
+                //usuwamy stary plik
+                Storage::disk('public')->delete($user->avatar);
+                $data['avatar'] = $path;
+            }
+        }
+
         // logika zapisu danych, które przeszły już walidację, w klasie UpdateUserProfile
-        $this->userRepository->updateModel(
-            Auth::user(), $request->validated()
-        );
+        $this->userRepository->updateModel($user, $data);
 
         return redirect()
             ->route('me.profile')
-            ->with('status', 'Profil zaktualizowany');
+            ->with('success', 'Profil zaktualizowany');
     }
 
     public function updateValidationRules(Request $request)
@@ -66,6 +83,6 @@ class UserController extends Controller
 
         return redirect()
             ->route('me.profile')
-            ->with('status', 'Profil zaktualizowany');
+            ->with('success', 'Profil zaktualizowany');
     }
 }

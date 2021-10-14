@@ -51,6 +51,8 @@
                     <!-- Content Row -->
                     <div class="row">
                         <div class="col-lg-12 mb-4">
+                            @include('shared.messages')
+
                             @yield('content')
                         </div>
                     </div>
