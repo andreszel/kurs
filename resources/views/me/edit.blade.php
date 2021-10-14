@@ -18,6 +18,7 @@
 
             <form action="{{ route('me.update') }}" method="post" enctype="multipart" class="test">
                 @csrf
+                <!-- X-XSRF-TOKEN -->
                 @if ($user->avatar)
                     <div>Jest awatar</div>
                 @else

@@ -52,6 +52,9 @@ class UpdateUserProfile extends FormRequest
                 'required',
                 'max:50',
                 new AlphaSpaces()
+            ],
+            'phone' => [
+                'min:6'
             ]
         ];
     }
@@ -61,7 +64,8 @@ class UpdateUserProfile extends FormRequest
         // :max możemy w ten sposób wstawiać wartości zmiennych
         return [
             'email.unique' => 'Podany adres email jest już zajęty!',
-            'name.max' => 'Podana ilość znaków jest zbyt duża! Max to: :max'
+            'name.max' => 'Podana ilość znaków jest zbyt duża! Max to: :max',
+            'phone.min' => 'Telefon musi zawierać minimum :min znaków'
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\GameServiceProvider;
+use App\Providers\UserServiceProvider;
 
 return [
 
@@ -178,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         GameServiceProvider::class,
+        UserServiceProvider::class,
     ],
 
     /*

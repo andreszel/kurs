@@ -6,11 +6,19 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserProfile;
+use App\Repository\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function profile()
     {
         return view('me.profile', [
@@ -29,9 +37,9 @@ class UserController extends Controller
     public function update(UpdateUserProfile $request)
     {
         // logika zapisu danych, które przeszły już walidację, w klasie UpdateUserProfile
-        $data = $request->validated();
-
-        
+        $this->userRepository->updateModel(
+            Auth::user(), $request->validated()
+        );
 
         return redirect()
             ->route('me.profile')
