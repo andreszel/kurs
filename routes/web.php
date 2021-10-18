@@ -131,6 +131,16 @@ Route::middleware(['auth'])->group(function () {
             ->name('update');
         Route::post('profile/avatar/delete', 'UserController@deleteAvatar')
             ->name('avatar.delete');
+        // listing
+        Route::get('games', 'GameController@list')
+            ->name('games.list');
+        // dodanie
+        Route::post('games', 'GameController@add')
+            ->name('games.add');
+        Route::delete('games', 'GameController@remove')
+            ->name('games.remove');
+        Route::post('games/rate', 'GameController@rate')
+            ->name('games.rate');
     });
 });
 

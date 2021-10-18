@@ -52,6 +52,7 @@
                         <th>Lp</th>
                         <th>Tytuł</th>
                         <th>Ocena</th>
+                        <th>Typ</th>
                         <th>Kategoria</th>
                         <th>Wydawca</th>
                         <th>Opcje</th>

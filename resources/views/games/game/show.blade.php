@@ -6,7 +6,27 @@
 <div class="card shadow mb-4">
     @if(!empty($game))
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table"></i> {{ $game->title }}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-table"></i> {{ $game->name }}
+            @if($userHasGame)
+                <form class="float-right m-0" method="POST" action="{{ route('me.games.remove') }}">
+                    @method('delete')
+                    @csrf
+                    <div class="form-row">
+                        <input type="hidden" name="gameId" value="{{ $game->id }}">
+                        <button type="submit" class="btn btn-primary mb-2">Usuń z mojej listy</button>
+                    </div>
+                </form>
+            @else
+                <form class="float-right m-0" method="POST" action="{{ route('me.games.add') }}">
+                    @csrf
+                    <div class="form-row">
+                        <input type="hidden" name="gameId" value="{{ $game->id }}">
+                        <button type="submit" class="btn btn-primary mb-2">Dodaj do mojej listy</button>
+                    </div>
+                </form>
+            @endif
+        </h6>
     </div>
     <div class="card-body">
         <ul>

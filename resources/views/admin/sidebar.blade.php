@@ -35,10 +35,23 @@
         <i class="fas fa-plus"></i>
         <span>Dodaj</span></a>
 </li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    <span class="text-uppercase">Konto</span>
+</div>
 <li class="nav-item">
     <a class="nav-link" href="{{ route('me.profile') }}">
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-user"></i>
         <span>Mój profil</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('me.games.list') }}">
+        <i class="fas fa-gamepad"></i>
+        <span>Gry</span></a>
 </li>
 
 <!-- Divider -->
@@ -56,7 +69,7 @@
 <li class="nav-item">
     <a class="nav-link" href="{{ route('games.list') }}">
         <i class="fas fa-gamepad"></i>
-        <span>Lista</span></a>
+        <span>Katalog</span></a>
 </li>
 
 <!-- Divider -->
