@@ -25,11 +25,13 @@
 </div>
 
 <!-- Nav Items -->
+@can('admin-level')
 <li class="nav-item">
     <a class="nav-link" href="{{ route('get.users') }}">
         <i class="fas fa-user"></i>
         <span>Użytkownicy</span></a>
 </li>
+@endcan
 <li class="nav-item">
     <a class="nav-link" href="#">
         <i class="fas fa-plus"></i>

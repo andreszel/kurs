@@ -11,11 +11,11 @@
     <div class="card-body">
         <ul>
             <li>Id: {{ $user->id }}</li>
-            <li>Imię: {{ $user->name }}</li>
             <li>Email: {{ $user->email }}</li>
+            <li>Nazwa: {{ $user->name }}</li>
             <li>Telefon:
                 @if ($user->phone)
-                <span>OK</span>
+                <span>{{ $user->phone }}</span>
                 @else
                 <span>EMPTY</span>
                 @endif

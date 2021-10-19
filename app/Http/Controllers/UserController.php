@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Faker\Factory;
 use Illuminate\Http\Request;
+use App\Repository\UserRepository;
+//use Faker\Factory;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function list(Request $request)
     {
         /* $users = [];
@@ -29,8 +38,45 @@ class UserController extends Controller
         $session = $request->session();
         $session->flash('ok', $ok); */
 
-        $users = User::orderBy('created_at', 'desc')
-            ->paginate(10);
+        /* $users = User::orderBy('created_at', 'desc')
+            ->paginate(10); */
+        
+        // Użycie bramki
+        // Laravel nie wymaga przekazywania modelu użytkownika, model jest pod spodem sprytnie przekazywany - wstrzykiwany
+        /* if (!Gate::allows('admin-level', true)) {
+            abort(403);
+        } */
+        /* if (Gate::denies('admin-level', false)) {
+            abort(403);
+        } */
+        /* if (Gate::denies('admin-level')) {
+            abort(403);
+        } */
+
+        // szybsza metoda do sprawdzenia czy user jest zautoryzowany
+        // authorize robi za nas abort(403)
+        /* try{
+            Gate::authorize('admin-level');
+        }catch(Throwable $exception){
+            dd($exception);
+        } */
+
+        // zwrócenie komunikatu z bramki, zamiast wartość bool bramka może zwrócić obiekt Response
+        // Response Illuminate\Auth\Access\Response
+        Gate::authorize('admin-level');
+
+        //Inny sposób na dobranie się do komunikatu
+        //$response = Gate::inspect('admin-level');
+        /* if($response->denied()){
+            echo $response->message();
+            dd('exit1');
+        } */
+        /* if(!$response->allowed()){
+            echo $response->message();
+            dd('exit2');
+        } */
+        
+        $users = $this->userRepository->all();
 
         return view('user.list', [
             'users' => $users
@@ -49,7 +95,11 @@ class UserController extends Controller
             'age' => $faker->numberBetween(12, 25),
             'html' => '<b>Bold HTML</b>'
         ]; */
-        $user = User::find($userId);
+        //$user = User::find($userId);
+
+        Gate::authorize('admin-level');
+
+        $user = $this->userRepository->get($userId);
 
         return view('user.show', [
             'user' => $user,
