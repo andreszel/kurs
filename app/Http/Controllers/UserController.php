@@ -97,12 +97,18 @@ class UserController extends Controller
         ]; */
         //$user = User::find($userId);
 
+        // *** GATE start ***
         Gate::authorize('admin-level');
+        // *** GATE stop ***
 
-        $user = $this->userRepository->get($userId);
+        // *** USER POLICY start ***
+        $userModel = $this->userRepository->get($userId);
+        // system rozponaje, że to dotyczy Policy, ponieważ przesyłamy drugi argument, który jest powiązany z modelem User
+        Gate::authorize('view', $userModel);
+        // *** USER POLICY stop ***
 
         return view('user.show', [
-            'user' => $user,
+            'user' => $userModel,
             'nick' => true
         ]);
     }
