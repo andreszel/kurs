@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('users/{userId}', 'UserController@show')
         ->name('get.user.show');
+        //->middleware('can:admin-level');
 
     Route::get('user/profile/{id}/address', 'User\ShowAddress')
         ->where(['id' => '[0-9]+'])

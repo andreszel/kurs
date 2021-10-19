@@ -97,18 +97,49 @@ class UserController extends Controller
         ]; */
         //$user = User::find($userId);
 
+        //Opcje sprawdzania z poziomu kontrolera
+        $this->authorize('admin-level');
+
+        // authorize poprzez obiekt Request
+        //$user = $request->user();
+
+        /* if(!$user->can('admin-level')){
+            abort(403);
+        }
+        if($user->cannot('admin-level')){
+            abort(403);
+        } */
+
         // *** GATE start ***
-        Gate::authorize('admin-level');
+        //Gate::authorize('admin-level');
         // *** GATE stop ***
 
         // *** USER POLICY start ***
         $userModel = $this->userRepository->get($userId);
         // system rozponaje, że to dotyczy Policy, ponieważ przesyłamy drugi argument, który jest powiązany z modelem User
-        Gate::authorize('view', $userModel);
+        //Gate::authorize('view', $userModel);
         // *** USER POLICY stop ***
 
+        // authorize poprzez obiekt Request
+        /* if($user->cannot('view', $userModel)){
+            abort(403);
+        } */
+        // jeżeli coś jest nie tak to domyślnie zwracany jest false, czyli nawet nie jest wywoływana metoda, np. jeżeli przekażemy inną liczbę parametrów
+        /* if($user->cannot('create', User::class)) {
+            abort(403);
+        } */
+        //Opcje sprawdzania z poziomu kontrolera
+        $this->authorize('view', $userModel);
+        //$this->authorize('create', User::class);
+
+        // jeżeli nie chcemy śmiecić w kontrolerze, to możemy użyć również middleware
+        //->middleware('can:admin-level')
+
+        //blade
+        //@can('view', App\Model\User::class)
+
         return view('user.show', [
-            'user' => $userModel,
+            'user' => $this->userRepository->get($userId),
             'nick' => true
         ]);
     }

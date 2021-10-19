@@ -4,9 +4,11 @@
     <td>{{ $userData['name'] }}</td>
     <td>{{ $userData['email'] }}</td>
     <td>
-        <a href="{{ route('get.user.show', [
-                'userId' => $userData['id']
-            ])
-        }}">Szczegóły</a>
+        @can('view', $user)
+            <a href="{{ route('get.user.show', [
+                    'userId' => $userData['id']
+                ])
+            }}">Szczegóły</a>
+        @endcan
     </td>
 </tr>
