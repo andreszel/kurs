@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Game;
 
 use App\Models\Scope\LastWeekScope;
 use Illuminate\Database\Eloquent\Builder;

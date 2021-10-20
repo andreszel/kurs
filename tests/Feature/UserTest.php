@@ -2,13 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\Game;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class UserTest extends TestCase
 {
     /**
-     * A basic test example.
+     * A basic feature test example.
      *
      * @return void
      */
@@ -17,7 +19,12 @@ class ExampleTest extends TestCase
         /* $response = $this->get('/');
 
         $response->assertStatus(200); */
+        //$response = $this->get('/');
         
+        /* $game = factory(Game::class)->make();
+        print_r($game);
+        exit; */
+
         $this->assertTrue(true);
     }
 }
